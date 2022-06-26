@@ -7,7 +7,7 @@ export function createTemplate(greeting: string) {
     <style>${styles.toString()}</style>
     <div class="widget">
       <p class="greeting">${greeting}</p>
-      <iframe src="https://sit.tanakorn.space/game1/" title="description"></iframe>
+      <iframe src="https://dev.tanakorn.space/game1/" title="description"></iframe>
     </div>
   `;
     return template;
