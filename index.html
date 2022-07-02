@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<body>
+  <body>
     <greeter-widget></greeter-widget>
     <script>
-        window.onload = () => {
-            widget = window.GreeterWidget('Hello world!');
-        };
-        setTimeout(() => {
-            widget.greeting = 'This is another message!';
-        }, 3000);
+      window.onload = () => {
+        widget = window.GreeterWidget("Hello world!");
+      };
+      setTimeout(() => {
+        widget.greeting = "This is another message!";
+      }, 3000);
     </script>
-</body>
+  </body>
 
 </html>
