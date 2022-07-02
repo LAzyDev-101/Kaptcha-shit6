@@ -1,7 +1,7 @@
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import styles from "./assets/index.css";
 
-export function createTemplate(greeting: string) {
+export function createTemplate(challenge: challenge) {
   const template = document.createElement("template");
   template.innerHTML = `
     <style>${styles.toString()}</style>
@@ -9,10 +9,10 @@ export function createTemplate(greeting: string) {
     <div class="widget">
     <div class="container">
     <header>
-      <small>Select all squares with</small> <strong id="content">Waldo</strong>
-      <small>if there are none, click skip</small>
+      <small>${challenge.rule}</small> <strong id="content">${challenge.name}</strong>
+      <small>${challenge.winCondition}</small>
     </header>
-    <div class="widget-content">
+    <div class="widget-content-wrapper">
     <iframe src="https://dev.tanakorn.space/game1/" title="description"></iframe>
     </div>
     </div>
@@ -37,7 +37,7 @@ export function createTemplate(greeting: string) {
   //   template.innerHTML = `
   //   <style>${styles.toString()}</style>
   //   <div class="widget">
-  //     <p class="greeting">${greeting}</p>
+  //     <p class="challenge">${challenge}</p>
   //     <iframe src="https://dev.tanakorn.space/game1/" title="description"></iframe>
   //   </div>
   // `;

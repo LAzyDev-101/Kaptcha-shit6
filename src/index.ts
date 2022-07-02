@@ -1,27 +1,28 @@
 import { createTemplate } from './template';
 
-const WC_TAG_NAME = 'greeter-widget';
-export default function createComponent(greeting: string) {
-    const template = createTemplate(greeting);
-    class GreeterWidgetElement extends HTMLElement {
+
+const WC_TAG_NAME = 'challenge-widget';
+export default function createComponent(challenge: challenge) {
+    const template = createTemplate(challenge);
+    class ChallengeWidgetElement extends HTMLElement {
         constructor() {
             super();
             const shadowDOM = this.attachShadow({ mode: 'open' });
             shadowDOM.appendChild(template.content.cloneNode(true));
         }
-        get greeting(): string {
-            const greetingEl = this.shadowRoot?.querySelector('.greeting');
-            return greetingEl?.textContent || '';
+        get challenge(): string {
+            const challengeEl = this.shadowRoot?.querySelector('.challenge-name');
+            return challengeEl?.textContent || '';
         }
-        set greeting(val: string) {
-            const greetingEl = this.shadowRoot?.querySelector('.greeting');
-            if (greetingEl) {
-                greetingEl.textContent = val;
+        set challenge(val: string) {
+            var challengeEl = this.shadowRoot?.querySelector('.challenge-name');
+            if (challengeEl) {
+                challengeEl.textContent = val;
             }
         }
     }
     if (!customElements.get(WC_TAG_NAME)) {
-        customElements.define(WC_TAG_NAME, GreeterWidgetElement);
+        customElements.define(WC_TAG_NAME, ChallengeWidgetElement);
     }
     // create an instance of the component
     const componentInstance = document.createElement(WC_TAG_NAME, {

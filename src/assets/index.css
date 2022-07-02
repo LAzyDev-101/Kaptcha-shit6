@@ -128,3 +128,11 @@ header {
   border-radius: 10px;
   box-shadow: 4px 5px 15px 3px rgba(0, 0, 0, 0.16);
 }
+
+.widget-content-wrapper {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  display: flex;
+  justify-content: Center;
+  overflow: hidden;
+}

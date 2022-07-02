@@ -6,7 +6,7 @@ module.exports = {
   entry: './src/index.ts',
   mode: isProduction ? 'production' : 'development',
   output: {
-    library: 'GreeterWidget',
+    library: 'ChallengeWidget',
     libraryTarget: 'umd',
     libraryExport: 'default',
     path: path.resolve(__dirname, 'dist'),

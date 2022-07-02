@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <body>
-    <greeter-widget></greeter-widget>
+    <challenge-widget></challenge-widget>
     <script>
       window.onload = () => {
-        widget = window.GreeterWidget("Hello world!");
+        widget = window.ChallengeWidget({name:'test name', rule:'test rule', winCondition:'test win condition'});
       };
       setTimeout(() => {
         widget.greeting = "This is another message!";
       }, 3000);
     </script>
   </body>
-
 </html>
