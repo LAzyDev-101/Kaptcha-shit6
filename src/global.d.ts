@@ -10,4 +10,5 @@ type challenge = {
   name: string;
   rule: string;
   winCondition: string;
+  src: string;
 };

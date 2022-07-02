@@ -10,11 +10,11 @@ export function createTemplate(challenge: challenge) {
     <div class="widget">
     <div class="container">
     <header>
-      <small>${challenge.rule}</small> <strong id="content">${challenge.name}</strong>
-      <small>${challenge.winCondition}</small>
+      <small class="challenge-rule">${challenge.rule}</small> <strong id="content" class="challenge-name">${challenge.name}</strong>
+      <small class="challenge-win-condition">${challenge.winCondition}</small>
     </header>
     <div class="widget-content-wrapper">
-    <iframe height="600px" width="900px" src="https://dev.tanakorn.space/game1/" title="description"></iframe>
+    <iframe class="challenge-content" height="600px" width="900px" src=${challenge.src} title="description"></iframe>
     </div>
     </div>
     <div class="footer">

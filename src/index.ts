@@ -10,15 +10,37 @@ export default function createComponent(challenge: challenge) {
             const shadowDOM = this.attachShadow({ mode: 'open' });
             shadowDOM.appendChild(template.content.cloneNode(true));
         }
-        get challenge(): string {
-            const challengeEl = this.shadowRoot?.querySelector('.challenge-name');
-            return challengeEl?.textContent || '';
-        }
-        set challenge(val: string) {
-            var challengeEl = this.shadowRoot?.querySelector('.challenge-name');
-            if (challengeEl) {
-                challengeEl.textContent = val;
+        
+        get challenge(): challenge {
+            return {
+                name: this.shadowRoot?.querySelector('.challenge-name')?.textContent || '',
+                rule: this.shadowRoot?.querySelector('.challenge-name')?.textContent || '',
+                winCondition: this.shadowRoot?.querySelector('.challenge-name')?.textContent || '',
+                src: this.shadowRoot?.querySelector('.challenge-content')?.getAttribute('src') || ''
             }
+        }
+        set challenge(val: challenge) {
+            var challengeName = this.shadowRoot?.querySelector('.challenge-name');
+            if (challengeName) {
+                challengeName.textContent = val.name;
+            }
+            var challengeRule = this.shadowRoot?.querySelector('.challenge-rule');
+            if (challengeRule) {
+                challengeRule.textContent = val.rule;
+            }
+            var challengeWinCondition = this.shadowRoot?.querySelector('.challenge-win-condition');
+            if (challengeWinCondition) {
+                challengeWinCondition.textContent = val.winCondition;
+            }
+            var challengeContent = this.shadowRoot?.querySelector('.challenge-content');
+            if (challengeContent) {
+                challengeContent.setAttribute('src', val.src);
+            }
+        }
+
+        reset() {
+            console.log('reset');
+            template.remove();   
         }
     }
     if (!customElements.get(WC_TAG_NAME)) {

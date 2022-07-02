@@ -7,7 +7,7 @@
       <div class="spinner">
         <label>
           <input type="checkbox" onclick="$(this).attr('disabled','disabled');startChallenge();" />
-          <span class="checkmark"><span>&nbsp;</span></span>
+          <span id="spinner" class="checkmark"><span>&nbsp; </span></span>
         </label>
       </div>
       <div class="text">I'm not a robot</div>
@@ -17,15 +17,45 @@
         <small>Privacy - Terms</small>
       </div>
     </div>
-    <challenge-widget></challenge-widget>
+    <!-- <challenge-widget></challenge-widget> -->
     <script>
       function startChallenge() {
         console.log("test");
+        let widget = null;
         setTimeout(() => {
-          widget = window.ChallengeWidget({ name: "test name", rule: "test rule", winCondition: "test win condition" });
-        //   widget.greeting = "This is another message!";
+          document.getElementById("spinner").className = "checkmark-spin";
+
+          widget = window.ChallengeWidget({
+            name: "test name222222222",
+            rule: "test rule",
+            winCondition: "test win condition",
+            src: "https://dev.tanakorn.space/game1/"
+          });
         }, 1000);
+
+        setTimeout(() => {
+          // widget = window.ChallengeWidget({ name: "test name2", rule: "test rule2", winCondition: "test win condition2" });
+          widget.reset();
+          // this.removeChild(widget);
+
+          widget = window.ChallengeWidget({
+            name: "test name244444",
+            rule: "test rule",
+            winCondition: "test win condition",
+            src: "error"
+          });
+
+          // widget.challenge = {
+          //   name: "test name223333",
+          //   rule: "test rule2",
+          //   winCondition: "test win condition2",
+          //   src: "error"
+          // };
+          document.getElementById("spinner").className = "checkmark-finish";
+        }, 5000);
       }
+
+      function testSet() {}
     </script>
 
     <style>
@@ -78,7 +108,9 @@
         opacity: 0;
         z-index: -1;
       }
-      input[type="checkbox"] + .checkmark {
+      input[type="checkbox"] + .checkmark,
+      input[type="checkbox"] + .checkmark-spin,
+      input[type="checkbox"] + .checkmark-finish {
         display: inline-block;
         width: 2em;
         height: 2em;
@@ -90,7 +122,10 @@
         align-items: center;
         cursor: pointer;
       }
-      input[type="checkbox"] + .checkmark span {
+
+      input[type="checkbox"] + .checkmark span,
+      input[type="checkbox"] + .checkmark-spin span,
+      input[type="checkbox"] + .checkmark-finish span {
         content: "";
         position: relative;
         margin-top: -3px;
@@ -99,7 +134,7 @@
         height: 1.2em;
         opacity: 0;
       }
-      /* input[type="checkbox"] + .checkmark > span:after {
+      input[type="checkbox"] + .checkmark-finish > span:after {
         content: "";
         position: absolute;
         display: block;
@@ -108,7 +143,7 @@
         left: 0;
         background-color: #029f56;
       }
-      input[type="checkbox"] + .checkmark > span:before {
+      input[type="checkbox"] + .checkmark-finish > span:before {
         content: "";
         position: absolute;
         display: block;
@@ -116,26 +151,25 @@
         bottom: 0;
         right: 0;
         background-color: #029f56;
-      } */
+      }
       input[type="checkbox"]:checked + .checkmark {
         animation: 2s spin forwards;
       }
-
-      input[type="checkbox"]:checked + .checkmark {
-        animation: 2s spininf infinite;
+      input[type="checkbox"]:checked + .checkmark-spin {
+        animation: 2s spininf forwards;
       }
-
-      /* input[type="checkbox"]:checked + .checkmark > span {
+      input[type="checkbox"]:checked + .checkmark-finish > span {
         animation: 1s fadein 1.9s forwards;
       }
-      input[type="checkbox"]:checked + .checkmark > span:after {
+      input[type="checkbox"]:checked + .checkmark-finish > span:after {
         animation: 0.3s bottomslide 2s forwards;
       }
-      input[type="checkbox"]:checked + .checkmark > span:before {
+      input[type="checkbox"]:checked + .checkmark-finish > span:before {
         animation: 0.5s rightslide 2.2s forwards;
-      } */
-      /* @keyframes fadein {
+      }
+      @keyframes fadein {
         0% {
+          transform: rotate(0deg);
           opacity: 0;
         }
         100% {
@@ -157,7 +191,7 @@
         100% {
           height: 100%;
         }
-      } */
+      }
       .logo {
         display: flex;
         flex-direction: column;
