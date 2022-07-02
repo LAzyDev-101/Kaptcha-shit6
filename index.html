@@ -3,65 +3,73 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <button onclick="finish();" id="btn">Finish!!</button>
-  <div class="captcha">
-    <div class="spinner">
-      <label>
-        <input type="checkbox" onclick="$(this).attr('disabled','disabled');startChallenge();" />
-        <span id="spinner" class="checkmark"><span>&nbsp; </span></span>
-      </label>
-    </div>
-    <div class="text">I'm not a robot</div>
-    <div class="logo">
-      <img src="https://i.kym-cdn.com/photos/images/facebook/001/039/985/503.0" />
-      <p>KAPTCHA</p>
-      <small>Privacy - Terms</small>
-    </div>
+<div class="captcha">
+  <div class="spinner">
+    <label>
+      <input type="checkbox" onclick="$(this).attr('disabled','disabled');startChallenge();" />
+      <span id="spinner" class="checkmark"><span>&nbsp; </span></span>
+    </label>
   </div>
+  <div class="text">I'm not a robot</div>
+  <div class="logo">
+    <img src="https://i.kym-cdn.com/photos/images/facebook/001/039/985/503.0" />
+    <p>KAPTCHA</p>
+    <small>Privacy - Terms</small>
+  </div>
+</div>
 
 <script>
-let widget = null;
- let host = "https://dev.tanakorn.space/core" 
+  let widget = null;
+  let host = "https://dev.tanakorn.space/core"
   let challengeList = {
     "stupid_run": {
       "name": "stupid_run",
       "rule": "Test rule",
       "winCondition": "test message",
-      "src": `${host}/static/stupid_run`
+      "src": `${host}/static/stupid_run`,
+      "width": "850",
+      "height": "250",
     },
-
     "stupid_block": {
       "name": "stupid_block",
       "rule": "Test rule",
       "winCondition": "test message",
-      "src": `${host}/static/stupid_block`
+      "src": `${host}/static/stupid_block`,
+      "width": "700",
+      "height": "650",
     },
-
     "stupid_bird": {
       "name": "stupid_bird",
       "rule": "Test rule",
       "winCondition": "test message",
-      "src": `${host}/static/stupid_bird`
+      "src": `${host}/static/stupid_bird`,
+      "width": "530",
+      "height": "500",
     },
-
     "stupid_memory": {
       "name": "stupid_memory",
       "rule": "Test rule",
       "winCondition": "test message",
-      "src": `${host}/static/stupid_memory`
+      "src": `${host}/static/stupid_memory`,
+      "width": "430",
+      "height": "370",
     },
-
     "stupid_animal": {
       "name": "The strongest",
       "rule": "Select 3 of the strongest",
       "winCondition": "Only the best 3",
-      "src": `${host}/static/stupid_animal`
+      "src": `${host}/static/stupid_animal`,
+      "width": "350",
+      "height": "350",
     },
 
     "stupid_traffic": {
       "name": "Traffic Light",
       "rule": "Select all image with a",
       "winCondition": "Stop once there are none left",
-      "src": `${host}/static/stupid_traffic`
+      "src": `${host}/static/stupid_traffic`,
+      "width": "720",
+      "height": "720",
     }
   }
 
@@ -110,15 +118,16 @@ let widget = null;
     else {
       objects = challengeList[challenge_name];
     }
-    widget = widget? widget.challenge = objects :window.ChallengeWidget(objects)
- 
+    widget = widget ? widget.challenge = objects : window.ChallengeWidget(objects)
+
   }
   // string & bool as parameter
   const sendResult = async () => {
-    
-    if (event.origin != "https://dev.tanakorn.space") { 
+
+    if (event.origin != "https://dev.tanakorn.space") {
       console.log(event.origin)
-      return; }
+      return;
+    }
     const result = await postData(sessionStorage.getItem('kaptcha_id'), event.data)
     if (result['status'] != "FINISH") {
       nextChallenge = result['next_challenge_name']
@@ -206,7 +215,7 @@ let widget = null;
   }
 
   input[type="checkbox"]+.checkmark,
-  input[type="checkbox"]+.checkmark-spin{
+  input[type="checkbox"]+.checkmark-spin {
     display: inline-block;
     width: 2em;
     height: 2em;

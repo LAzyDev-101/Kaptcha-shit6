@@ -11,4 +11,6 @@ interface challenge  {
   rule: string;
   winCondition: string;
   src: string;
+  width:string,
+  height:string,
 }
