@@ -19,26 +19,28 @@
 <!-- <script type="text/javascript" language="javascript" src="data.json"></script>  -->
 <script>
   let widget = null;
+ /*  let host = "https://dev.tanakorn.space/core" */
+ let host = "http://localhost:3000"
   let challengeList = {
     "stupid_run": {
       "name": "stupid_run",
       "rule": "Test rule",
       "winCondition": "test message",
-      "src": "http://localhost:3000/static/stupid_run"
+      "src": `${host}/static/stupid_run`
     },
 
     "stupid_block": {
       "name": "stupid_block",
       "rule": "Test rule",
       "winCondition": "test message",
-      "src": "test"
+      "src": `${host}/static/stupid_block`
     },
 
     "stupid_bird": {
       "name": "stupid_bird",
       "rule": "Test rule",
       "winCondition": "test message",
-      "src": "http://localhost:3000/static/stupid_bird"
+      "src": `${host}/static/stupid_bird`
     },
 
     "stupid_memory": {
@@ -46,6 +48,21 @@
       "rule": "Test rule",
       "winCondition": "test message",
       "src": "test"
+      "src": `${host}/static/stupid_memory`
+    },
+
+    "stupid_animal": {
+      "name": "The strongest",
+      "rule": "Select 3 of the strongest",
+      "winCondition": "Only the best 3",
+      "src": `${host}/static/stupid_animal`
+    },
+
+    "stupid_traffic": {
+      "name": "Traffic Light",
+      "rule": "Select all image with a",
+      "winCondition": "Stop once there are none left",
+      "src": `${host}/static/stupid_traffic`
     }
   }
 
@@ -85,7 +102,8 @@
     else {
       objects = challengeList[challenge_name];
     }
-    widget = window.ChallengeWidget(objects)
+    widget = widget? widget.challenge = objects :window.ChallengeWidget(objects)
+ 
   }
   // string & bool as parameter
   const sendResult = async () => {
