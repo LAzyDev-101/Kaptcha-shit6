@@ -18,6 +18,8 @@
 <!-- <challenge-widget></challenge-widget> -->
 <script>
   let widget = null;
+  import gameData from "../data.json";
+
   function startChallenge() {
     setTimeout(() => {
       document.getElementById("spinner").className = "checkmark-spin";
@@ -53,12 +55,12 @@
 
   // TODO 
   const getChallenge = (challenge_name) => {
-    widget.challenge = {
-      name: challenge_name,
-      rule: "test rule2",
-      winCondition: "test win condition2",
-      src: `http://localhost:3000/static/${challenge_name}`
-    };
+    if(challenge_name) {
+    widget.challenge = gameData[challenge_name];
+    }
+    else {
+      widget.challenge = gameData[Object.keys(gameData)[Math.floor(Math.random() * Object.keys(gameData).length)]];
+    }
   }
   // string & bool as parameter
   const sendResult = async () => {

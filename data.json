@@ -1,0 +1,29 @@
+{
+  "stupid_run": {
+    "name": "stupid_run",
+    "rule": "Test rule",
+    "winCondition": "test message",
+    "src": "http://localhost:3000/static/stupid_run"
+  },
+
+  "stupid_block": {
+    "name": "stupid_block",
+    "rule": "Test rule",
+    "winCondition": "test message",
+    "src": "test"
+  },
+
+  "stupid_bird": {
+    "name": "stupid_bird",
+    "rule": "Test rule",
+    "winCondition": "test message",
+    "src": "http://localhost:3000/static/stupid_bird"
+  },
+
+  "stupid_memory": {
+    "name": "stupid_memory",
+    "rule": "Test rule",
+    "winCondition": "test message",
+    "src": "test"
+  }
+}
