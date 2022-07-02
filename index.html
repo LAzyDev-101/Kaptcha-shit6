@@ -1,105 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-  <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    <div class="captcha">
-      <div class="spinner">
-        <label>
-          <input type="checkbox" onclick="$(this).attr('disabled','disabled');startChallenge();" />
-          <span class="checkmark"><span>&nbsp;</span></span>
-        </label>
-      </div>
-      <div class="text">I'm not a robot</div>
-      <div class="logo">
-        <img src="https://i.kym-cdn.com/photos/images/facebook/001/039/985/503.0" />
-        <p>KAPTCHA</p>
-        <small>Privacy - Terms</small>
-      </div>
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <div class="captcha">
+    <div class="spinner">
+      <label>
+        <input type="checkbox" onclick="$(this).attr('disabled','disabled');startChallenge();" />
+        <span class="checkmark"><span>&nbsp;</span></span>
+      </label>
     </div>
-    <challenge-widget></challenge-widget>
-    <script>
-      function startChallenge() {
-        console.log("test");
-        setTimeout(() => {
-          widget = window.ChallengeWidget({ name: "test name", rule: "test rule", winCondition: "test win condition" });
-        //   widget.greeting = "This is another message!";
-        }, 1000);
-      }
-    </script>
+    <div class="text">I'm not a robot</div>
+    <div class="logo">
+      <img src="https://i.kym-cdn.com/photos/images/facebook/001/039/985/503.0" />
+      <p>KAPTCHA</p>
+      <small>Privacy - Terms</small>
+    </div>
+  </div>
+  <script>
+    const  kaptcha_key  = 'kaptcha_id'; 
+    function startChallenge() {
+      //set kaptcha_id on session storage
+      sessionStorage.setItem('kaptcha_id', generateString(5));
+      window.addEventListener('message', sendResult, false);
+      setTimeout(() => {
+        widget = window.ChallengeWidget();
+      }, 1000);
+    }
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    <style>
-      body {
-        font-family: "Roboto", sans-serif;
+    const generateString = (length) => {
+      let result = ' ';
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
       }
+
+      return result;
+    }
+
+
+    // string & bool as parameter
+    const sendResult = (challenge_name) => {
+      result = postData(sessionStorage.getItem('kaptcha_key'),challenge_name)
+      if(!result['status']=="FINISH"){
+        nextChallenge = result['next_challenge_name']
+        // TODO 
+      }
+    }
+
+    // TODO 
+    const getChallenge =(challenge_name) => {
+      setTimeout(() => {widget = window.ChallengeWidget(challenge_name);}, 1000);
+    }
+
+    // POST method implementation:
+    async function postData(id, challenge_name) {
+
+      // Build formData object.
+      let formData = new FormData();
+      formData.append('id', id);
+      formData.append('challeng_name', challenge_name);
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: formData// body data type must match "Content-Type" header
+      });
+      return response.json(); // parses JSON response into native JavaScript objects
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: "Roboto", sans-serif;
+    }
+
+    .captcha {
+      background-color: #f9f9f9;
+      border: 2px solid #d3d3d3;
+      border-radius: 5px;
+      color: #4c4a4b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 350px;
+    }
+
+    @media screen and (max-width: 500px) {
       .captcha {
-        background-color: #f9f9f9;
-        border: 2px solid #d3d3d3;
-        border-radius: 5px;
-        color: #4c4a4b;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 350px;
-      }
-
-      @media screen and (max-width: 500px) {
-        .captcha {
-          flex-direction: column;
-        }
-        .text {
-          margin: 0.5em !important;
-          text-align: center;
-        }
-        .logo {
-          align-self: center !important;
-        }
-        .spinner {
-          margin: 2em 0.5em 0.5em 0.5em !important;
-        }
+        flex-direction: column;
       }
 
       .text {
-        font-size: 1.2em;
-        font-weight: 500;
-        margin-right: 1em;
+        margin: 0.5em !important;
+        text-align: center;
       }
+
+      .logo {
+        align-self: center !important;
+      }
+
       .spinner {
-        position: relative;
-        width: 2em;
-        height: 2em;
-        display: flex;
-        margin: 2em 1em;
-        align-items: center;
-        justify-content: center;
+        margin: 2em 0.5em 0.5em 0.5em !important;
       }
-      input[type="checkbox"] {
-        position: absolute;
-        opacity: 0;
-        z-index: -1;
-      }
-      input[type="checkbox"] + .checkmark {
-        display: inline-block;
-        width: 2em;
-        height: 2em;
-        background-color: #fcfcfc;
-        border: 2.5px solid #c3c3c3;
-        border-radius: 3px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-      }
-      input[type="checkbox"] + .checkmark span {
-        content: "";
-        position: relative;
-        margin-top: -3px;
-        transform: rotate(45deg);
-        width: 0.75em;
-        height: 1.2em;
-        opacity: 0;
-      }
-      /* input[type="checkbox"] + .checkmark > span:after {
+    }
+
+    .text {
+      font-size: 1.2em;
+      font-weight: 500;
+      margin-right: 1em;
+    }
+
+    .spinner {
+      position: relative;
+      width: 2em;
+      height: 2em;
+      display: flex;
+      margin: 2em 1em;
+      align-items: center;
+      justify-content: center;
+    }
+
+    input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      z-index: -1;
+    }
+
+    input[type="checkbox"]+.checkmark {
+      display: inline-block;
+      width: 2em;
+      height: 2em;
+      background-color: #fcfcfc;
+      border: 2.5px solid #c3c3c3;
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"]+.checkmark span {
+      content: "";
+      position: relative;
+      margin-top: -3px;
+      transform: rotate(45deg);
+      width: 0.75em;
+      height: 1.2em;
+      opacity: 0;
+    }
+
+    /* input[type="checkbox"] + .checkmark > span:after {
         content: "";
         position: absolute;
         display: block;
@@ -117,15 +172,15 @@
         right: 0;
         background-color: #029f56;
       } */
-      input[type="checkbox"]:checked + .checkmark {
-        animation: 2s spin forwards;
-      }
+    input[type="checkbox"]:checked+.checkmark {
+      animation: 2s spin forwards;
+    }
 
-      input[type="checkbox"]:checked + .checkmark {
-        animation: 2s spininf infinite;
-      }
+    input[type="checkbox"]:checked+.checkmark {
+      animation: 2s spininf infinite;
+    }
 
-      /* input[type="checkbox"]:checked + .checkmark > span {
+    /* input[type="checkbox"]:checked + .checkmark > span {
         animation: 1s fadein 1.9s forwards;
       }
       input[type="checkbox"]:checked + .checkmark > span:after {
@@ -134,7 +189,7 @@
       input[type="checkbox"]:checked + .checkmark > span:before {
         animation: 0.5s rightslide 2.2s forwards;
       } */
-      /* @keyframes fadein {
+    /* @keyframes fadein {
         0% {
           opacity: 0;
         }
@@ -158,106 +213,121 @@
           height: 100%;
         }
       } */
-      .logo {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 100%;
-        align-self: flex-end;
-        margin: 0.5em 1em;
-      }
-      .logo img {
-        height: 2em;
-        width: 2em;
-      }
-      .logo p {
-        color: #9d9ba7;
-        margin: 0;
-        font-size: 1em;
-        font-weight: 700;
-        margin: 0.4em 0 0.2em 0;
-      }
-      .logo small {
-        color: #9d9ba7;
-        margin: 0;
-        font-size: 0.8em;
-      }
-      @keyframes spin {
-        10% {
-          width: 0;
-          height: 0;
-          border-width: 6px;
-        }
-        30% {
-          width: 0;
-          height: 0;
-          border-radius: 50%;
-          border-width: 1em;
-          transform: rotate(0deg);
-          border-color: rgb(199, 218, 245);
-        }
-        50% {
-          width: 2em;
-          height: 2em;
-          border-radius: 50%;
-          border-width: 4px;
-          border-color: rgb(199, 218, 245);
-          border-right-color: rgb(89, 152, 239);
-        }
-        70% {
-          border-width: 4px;
-          border-color: rgb(199, 218, 245);
-          border-right-color: rgb(89, 152, 239);
-        }
-        90% {
-          border-width: 4px;
-        }
-        100% {
-          width: 2em;
-          height: 2em;
-          border-radius: 50%;
-          transform: rotate(720deg);
-          border-color: transparent;
-        }
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      align-self: flex-end;
+      margin: 0.5em 1em;
+    }
+
+    .logo img {
+      height: 2em;
+      width: 2em;
+    }
+
+    .logo p {
+      color: #9d9ba7;
+      margin: 0;
+      font-size: 1em;
+      font-weight: 700;
+      margin: 0.4em 0 0.2em 0;
+    }
+
+    .logo small {
+      color: #9d9ba7;
+      margin: 0;
+      font-size: 0.8em;
+    }
+
+    @keyframes spin {
+      10% {
+        width: 0;
+        height: 0;
+        border-width: 6px;
       }
 
-      @keyframes spininf {
-        0% {
-          width: 2em;
-          height: 2em;
-          border-radius: 50%;
-          border-width: 4px;
-          border-color: rgb(199, 218, 245);
-          border-right-color: rgb(89, 152, 239);
-        }
-        70% {
-          border-width: 4px;
-          border-color: rgb(199, 218, 245);
-          border-right-color: rgb(89, 152, 239);
-        }
-        90% {
-          border-width: 4px;
-          border-color: rgb(199, 218, 245);
-          border-right-color: rgb(89, 152, 239);
-        }
-        100% {
-          border-width: 4px;
-          border-color: rgb(199, 218, 245);
-          border-right-color: rgb(89, 152, 239);
-          width: 2em;
-          height: 2em;
-          border-radius: 50%;
-          transform: rotate(720deg);
-        }
+      30% {
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        border-width: 1em;
+        transform: rotate(0deg);
+        border-color: rgb(199, 218, 245);
       }
-      ::selection {
-        background-color: transparent;
-        color: teal;
+
+      50% {
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
       }
-      ::-moz-selection {
-        background-color: transparent;
-        color: teal;
+
+      70% {
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
       }
-    </style>
-  </body>
+
+      90% {
+        border-width: 4px;
+      }
+
+      100% {
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        transform: rotate(720deg);
+        border-color: transparent;
+      }
+    }
+
+    @keyframes spininf {
+      0% {
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
+      }
+
+      70% {
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
+      }
+
+      90% {
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
+      }
+
+      100% {
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        transform: rotate(720deg);
+      }
+    }
+
+    ::selection {
+      background-color: transparent;
+      color: teal;
+    }
+
+    ::-moz-selection {
+      background-color: transparent;
+      color: teal;
+    }
+  </style>
+</body>
+
 </html>

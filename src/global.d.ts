@@ -6,8 +6,8 @@ declare module "*.css" {
  * Now declare things that go in the global namespace,
  * or augment existing declarations in the global namespace.
  */
-type challenge = {
+interface challenge  {
   name: string;
   rule: string;
   winCondition: string;
-};
+}
