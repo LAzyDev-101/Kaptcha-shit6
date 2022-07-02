@@ -115,7 +115,10 @@ let widget = null;
   }
   // string & bool as parameter
   const sendResult = async () => {
-    if (event.origin != "https://dev.tanakorn.space") { return; }
+    
+    if (event.origin != "https://dev.tanakorn.space") { 
+      console.log(event.origin)
+      return; }
     const result = await postData(sessionStorage.getItem('kaptcha_id'), event.data)
     if (result['status'] != "FINISH") {
       nextChallenge = result['next_challenge_name']
