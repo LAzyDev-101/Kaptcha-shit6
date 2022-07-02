@@ -8,6 +8,8 @@ export default function createComponent(greeting: string) {
             super();
             const shadowDOM = this.attachShadow({ mode: 'open' });
             shadowDOM.appendChild(template.content.cloneNode(true));
+            //set kaptcha_id on session storage
+            sessionStorage.setItem('kaptcha_id',generateString(5))
         }
         get greeting(): string {
             const greetingEl = this.shadowRoot?.querySelector('.greeting');
@@ -20,6 +22,18 @@ export default function createComponent(greeting: string) {
             }
         }
     }
+    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    const generateString = (length:number) => {
+        let result = ' ';
+        const charactersLength = characters.length;
+        for ( let i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+    
+        return result;
+    }
+
     if (!customElements.get(WC_TAG_NAME)) {
         customElements.define(WC_TAG_NAME, GreeterWidgetElement);
     }
