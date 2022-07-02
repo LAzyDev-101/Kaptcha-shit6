@@ -3,7 +3,7 @@ import styles from "./assets/challangeWidget.css";
 // import { challenge } from './global';
 
 // const host = 'https://dev.tanakorn.space/';
-const host = 'http://localhost:3000/static/';
+const host = "http://localhost:3000/static/";
 
 export function createTemplate(challenge: challenge) {
   const template = document.createElement("template");
@@ -14,7 +14,9 @@ export function createTemplate(challenge: challenge) {
     <div class="widget">
     <div class="container">
     <header>
-      <small class="challenge-rule">${challenge.rule}</small> <strong id="content" class="challenge-name">${challenge.name}</strong>
+      <small class="challenge-rule">${challenge.rule}</small> <strong id="content" class="challenge-name">${
+    challenge.name
+  }</strong>
       <small class="challenge-win-condition">${challenge.winCondition}</small>
     </header>
     <div class="widget-content-wrapper">

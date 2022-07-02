@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<div class="captcha">
-  <div class="spinner">
-    <label>
-      <input type="checkbox" onclick="$(this).attr('disabled','disabled');startChallenge();" />
-      <span id="spinner" class="checkmark"><span>&nbsp; </span></span>
-    </label>
+
+<button onclick="finish();" id="btn">Finish!!</button>
+  <div class="captcha">
+    <div class="spinner">
+      <label>
+        <input type="checkbox" onclick="$(this).attr('disabled','disabled');startChallenge();" />
+        <span id="spinner" class="checkmark"><span>&nbsp; </span></span>
+      </label>
+    </div>
+    <div class="text">I'm not a robot</div>
+    <div class="logo">
+      <img src="https://i.kym-cdn.com/photos/images/facebook/001/039/985/503.0" />
+      <p>KAPTCHA</p>
+      <small>Privacy - Terms</small>
+    </div>
   </div>
-  <div class="text">I'm not a robot</div>
-  <div class="logo">
-    <img src="https://i.kym-cdn.com/photos/images/facebook/001/039/985/503.0" />
-    <p>KAPTCHA</p>
-    <small>Privacy - Terms</small>
-  </div>
-</div>
+
 <!-- <challenge-widget></challenge-widget> -->
 <!-- <script type="text/javascript" language="javascript" src="data.json"></script>  -->
 <script>
@@ -76,9 +79,18 @@
       //set kaptcha_id on session storage
       window.addEventListener('message', sendResult, false);
       sessionStorage.setItem('kaptcha_id', generateString(5));
-      document.getElementById("spinner").className = "checkmark-spin";
+      document.getElementById("spinner").className = "checkmark";
       getChallenge()
     }, 1000);
+
+
+    setTimeout(() => {
+      document.getElementById("spinner").className = "checkmark-spin";
+    }, 1000);
+  }
+
+  function finish() {
+    document.getElementById("spinner").className = "checkmark-finish";
   }
 
   const generateString = (length) => {
@@ -195,13 +207,24 @@
   }
 
   input[type="checkbox"]+.checkmark,
-  input[type="checkbox"]+.checkmark-spin,
-  input[type="checkbox"]+.checkmark-finish {
+  input[type="checkbox"]+.checkmark-spin{
     display: inline-block;
     width: 2em;
     height: 2em;
     background-color: #fcfcfc;
     border: 2.5px solid #c3c3c3;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+
+  input[type="checkbox"]+.checkmark-finish {
+    display: inline-block;
+    width: 2em;
+    height: 2em;
     border-radius: 3px;
     display: flex;
     justify-content: center;
@@ -246,7 +269,7 @@
   }
 
   input[type="checkbox"]:checked+.checkmark-spin {
-    animation: 2s spininf forwards;
+    animation: 2s spininf infinite;
   }
 
   input[type="checkbox"]:checked+.checkmark-finish>span {
