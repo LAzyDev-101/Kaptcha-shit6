@@ -1,5 +1,9 @@
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import styles from "./assets/challangeWidget.css";
+// import { challenge } from './global';
+
+// const host = 'https://dev.tanakorn.space/';
+const host = 'http://localhost:3000/static/';
 
 export function createTemplate(challenge: challenge) {
   const template = document.createElement("template");
@@ -14,7 +18,7 @@ export function createTemplate(challenge: challenge) {
       <small class="challenge-win-condition">${challenge.winCondition}</small>
     </header>
     <div class="widget-content-wrapper">
-    <iframe class="challenge-content" height="600px" width="900px" src=${challenge.src} title="description"></iframe>
+    <iframe class="challenge-content" height="600px" width="900px" src="${host}${challenge.name}" title="description"></iframe>
     </div>
     </div>
     <div class="footer">
