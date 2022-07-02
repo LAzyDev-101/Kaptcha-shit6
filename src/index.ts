@@ -32,7 +32,7 @@ export default function createComponent(challenge: challenge) {
             }
             var challengeContent = this.shadowRoot?.querySelector(".challenge-content");
             if (challengeContent) {
-                challengeContent.setAttribute("src", `http://localhost:3000/${val.name}`);
+                challengeContent.setAttribute("src", `http://localhost:3000/static/${val.name}`);
             }
         }
 

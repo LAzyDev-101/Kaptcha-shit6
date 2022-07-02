@@ -18,12 +18,10 @@
     </div>
   </div>
 
-<!-- <challenge-widget></challenge-widget> -->
-<!-- <script type="text/javascript" language="javascript" src="data.json"></script>  -->
 <script>
-  let widget = null;
- /*  let host = "https://dev.tanakorn.space/core" */
- let host = "http://localhost:3000"
+let widget = null;
+ let host = "https://dev.tanakorn.space/core" 
+//  let host = "http://localhost:3000"
   let challengeList = {
     "stupid_run": {
       "name": "stupid_run",
@@ -50,7 +48,6 @@
       "name": "stupid_memory",
       "rule": "Test rule",
       "winCondition": "test message",
-      "src": "test"
       "src": `${host}/static/stupid_memory`
     },
 
@@ -119,7 +116,7 @@
   }
   // string & bool as parameter
   const sendResult = async () => {
-    if (event.origin != "http://localhost:3000") { return; }
+    if (event.origin != host) { return; }
     const result = await postData(sessionStorage.getItem('kaptcha_id'), event.data)
     if (result['status'] != "FINISH") {
       nextChallenge = result['next_challenge_name']
@@ -132,7 +129,7 @@
   // POST method implementation:
   async function postData(id, challenge_name) {
     // Default options are marked with *
-    url = "http://localhost:3000/post_finish"
+    url = `${host}post_finish`
     const body = JSON.stringify({
       "key": id,
       "challenge_name": challenge_name
