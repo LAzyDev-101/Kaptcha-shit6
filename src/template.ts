@@ -18,7 +18,7 @@ export function createTemplate(challenge: challenge) {
       <small class="challenge-win-condition">${challenge.winCondition}</small>
     </header>
     <div class="widget-content-wrapper">
-    <iframe class="challenge-content" height="600px" width="900px" src="${host}${challenge.name}" title="description"></iframe>
+    <iframe class="challenge-content" height="500px" width="900px" src="${challenge.src}" title="description"></iframe>
     </div>
     </div>
     <div class="footer">

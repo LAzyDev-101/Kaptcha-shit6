@@ -8,24 +8,28 @@ const stupid_run: challenge = {
     name: "stupid_run",
     rule: "Test rule",
     winCondition: "test message",
+    src: "http://localhost:3000/static/stupid_run"
 };
 
 const stupid_block: challenge = {
     name: "stupid_block",
     rule: "Test rule",
     winCondition: "test message",
+    src: "test"
 };
 
 const stupid_bird: challenge = {
     name: "stupid_bird",
     rule: "Test rule",
     winCondition: "test message",
+    src: "http://localhost:3000/static/stupid_bird"
 };
 
 const stupid_memory: challenge = {
     name: "stupid_memory",
     rule: "Test rule",
     winCondition: "test message",
+    src: "test"
 };
 
 const challengeObjectByName = new Map();
@@ -56,7 +60,7 @@ export default function createComponent(challenge: challenge) {
                 name: this.shadowRoot?.querySelector('.challenge-name')?.textContent || '',
                 rule: this.shadowRoot?.querySelector('.challenge-name')?.textContent || '',
                 winCondition: this.shadowRoot?.querySelector('.challenge-name')?.textContent || '',
-                // src: this.shadowRoot?.querySelector('.challenge-content')?.getAttribute('src') || ''
+                src: this.shadowRoot?.querySelector('.challenge-content')?.getAttribute('src') || ''
             }
         }
         set challenge(val: challenge) {
@@ -72,10 +76,10 @@ export default function createComponent(challenge: challenge) {
             if (challengeWinCondition) {
                 challengeWinCondition.textContent = val.winCondition;
             }
-            // var challengeContent = this.shadowRoot?.querySelector('.challenge-content');
-            // if (challengeContent) {
-            //     challengeContent.setAttribute('src', val.src);
-            // }
+            var challengeContent = this.shadowRoot?.querySelector('.challenge-content');
+            if (challengeContent) {
+                challengeContent.setAttribute('src', `http://localhost:3000/${val.name}`);
+            }
         }
 
         reset() {
