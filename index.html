@@ -16,32 +16,53 @@
   </div>
 </div>
 <!-- <challenge-widget></challenge-widget> -->
+<!-- <script type="text/javascript" language="javascript" src="data.json"></script>  -->
 <script>
   let widget = null;
-  import gameData from "../data.json";
+  let challengeList = {
+    "stupid_run": {
+      "name": "stupid_run",
+      "rule": "Test rule",
+      "winCondition": "test message",
+      "src": "http://localhost:3000/static/stupid_run"
+    },
+
+    "stupid_block": {
+      "name": "stupid_block",
+      "rule": "Test rule",
+      "winCondition": "test message",
+      "src": "test"
+    },
+
+    "stupid_bird": {
+      "name": "stupid_bird",
+      "rule": "Test rule",
+      "winCondition": "test message",
+      "src": "http://localhost:3000/static/stupid_bird"
+    },
+
+    "stupid_memory": {
+      "name": "stupid_memory",
+      "rule": "Test rule",
+      "winCondition": "test message",
+      "src": "test"
+    }
+  }
+
+  let challenge_name = null;
+  const kaptcha_key = 'kaptcha_id';
+
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   function startChallenge() {
     setTimeout(() => {
+      //set kaptcha_id on session storage
+      window.addEventListener('message', sendResult, false);
+      sessionStorage.setItem('kaptcha_id', generateString(5));
       document.getElementById("spinner").className = "checkmark-spin";
       getChallenge()
     }, 1000);
-
   }
-
-  function testSet() { }
-
-  const kaptcha_key = 'kaptcha_id';
-
-
-  function startChallenge() {
-    //set kaptcha_id on session storage
-    window.addEventListener('message', sendResult, false);
-    sessionStorage.setItem('kaptcha_id', generateString(5));
-    setTimeout(() => {
-      widget = window.ChallengeWidget();
-    }, 1000);
-  }
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
   const generateString = (length) => {
     let result = ' ';
@@ -55,12 +76,16 @@
 
   // TODO 
   const getChallenge = (challenge_name) => {
-    if(challenge_name) {
-    widget.challenge = gameData[challenge_name];
+    // console.log(challengeList['stupid_run']);
+    let objects;
+    if (!challenge_name) {
+      objects = challengeList[Object.keys(challengeList)[Math.floor(Math.random() * Object.keys(challengeList).length)]];
+
     }
     else {
-      widget.challenge = gameData[Object.keys(gameData)[Math.floor(Math.random() * Object.keys(gameData).length)]];
+      objects = challengeList[challenge_name];
     }
+    widget = window.ChallengeWidget(objects)
   }
   // string & bool as parameter
   const sendResult = async () => {
@@ -73,8 +98,6 @@
       //TODO: On finish
     }
   }
-
-
 
   // POST method implementation:
   async function postData(id, challenge_name) {
