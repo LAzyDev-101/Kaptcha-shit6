@@ -128,7 +128,7 @@ let widget = null;
   // POST method implementation:
   async function postData(id, challenge_name) {
     // Default options are marked with *
-    url = `${host}post_finish`
+    url = `${host}/post_finish`
     const body = JSON.stringify({
       "key": id,
       "challenge_name": challenge_name
