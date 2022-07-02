@@ -23,33 +23,33 @@
   let host = "https://dev.tanakorn.space/core"
   let challengeList = {
     "stupid_run": {
-      "name": "stupid_run",
-      "rule": "Test rule",
-      "winCondition": "test message",
+      "name": "Stupid run",
+      "rule": "Spacebar to jump!!",
+      "winCondition": "Try to win (-0...0-)",
       "src": `${host}/static/stupid_run`,
       "width": "850",
       "height": "250",
     },
     "stupid_block": {
-      "name": "stupid_block",
-      "rule": "Test rule",
-      "winCondition": "test message",
+      "name": "Stupid block",
+      "rule": "Reach the goal without touching the wall",
+      "winCondition": "No way to run",
       "src": `${host}/static/stupid_block`,
       "width": "700",
       "height": "650",
     },
     "stupid_bird": {
-      "name": "stupid_bird",
-      "rule": "Test rule",
-      "winCondition": "test message",
+      "name": "Stupid Flappy Bird 0...0",
+      "rule": "Control the with your spacebarbutton",
+      "winCondition": "Reach 5 score",
       "src": `${host}/static/stupid_bird`,
       "width": "530",
       "height": "500",
     },
     "stupid_memory": {
-      "name": "stupid_memory",
-      "rule": "Test rule",
-      "winCondition": "test message",
+      "name": "Memory",
+      "rule": "Remember all of the titles with your",
+      "winCondition": "GL!!",
       "src": `${host}/static/stupid_memory`,
       "width": "430",
       "height": "370",
@@ -107,9 +107,7 @@
     return result;
   }
 
-  // TODO 
   const getChallenge = (challenge_name) => {
-    // console.log(challengeList['stupid_run']);
     let objects;
     if (!challenge_name) {
       objects = challengeList[Object.keys(challengeList)[Math.floor(Math.random() * Object.keys(challengeList).length)]];
@@ -118,14 +116,12 @@
     else {
       objects = challengeList[challenge_name];
     }
-    widget = widget ? widget.challenge = objects : window.ChallengeWidget(objects)
+    widget = widget!==null ? widget.challenge = objects : window.ChallengeWidget(objects)
 
   }
-  // string & bool as parameter
   const sendResult = async () => {
 
     if (event.origin != "https://dev.tanakorn.space") {
-      console.log(event.origin)
       return;
     }
     const result = await postData(sessionStorage.getItem('kaptcha_id'), event.data)
