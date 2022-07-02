@@ -19,11 +19,13 @@
     </div>
   </div>
   <script>
-    const  kaptcha_key  = 'kaptcha_id'; 
+    const kaptcha_key = 'kaptcha_id';
+
+
     function startChallenge() {
       //set kaptcha_id on session storage
-      sessionStorage.setItem('kaptcha_id', generateString(5));
       window.addEventListener('message', sendResult, false);
+      sessionStorage.setItem('kaptcha_id', generateString(5));
       setTimeout(() => {
         widget = window.ChallengeWidget();
       }, 1000);
@@ -42,33 +44,36 @@
 
 
     // string & bool as parameter
-    const sendResult = (challenge_name) => {
-      result = postData(sessionStorage.getItem('kaptcha_key'),challenge_name)
-      if(!result['status']=="FINISH"){
+    const sendResult = () => {
+      if (event.origin != "http://localhost:3000") { return; }
+      debugger
+      result = postData(sessionStorage.getItem('kaptcha_id'), event.data)
+      if (!result['status'] == "FINISH") {
         nextChallenge = result['next_challenge_name']
-        // TODO 
+        getChallenge(nextChallenge)
+      } else {
+        //TODO: On finish
       }
     }
 
     // TODO 
-    const getChallenge =(challenge_name) => {
-      setTimeout(() => {widget = window.ChallengeWidget(challenge_name);}, 1000);
+    const getChallenge = (challenge_name) => {
+      setTimeout(() => { widget = window.ChallengeWidget(challenge_name); }, 1000);
     }
 
     // POST method implementation:
     async function postData(id, challenge_name) {
-
-      // Build formData object.
-      let formData = new FormData();
-      formData.append('id', id);
-      formData.append('challeng_name', challenge_name);
       // Default options are marked with *
+      url = "http://localhost:3000/post_finish"
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: formData// body data type must match "Content-Type" header
+        body: JSON.stringify({
+          "key": id,
+          "challenge_name": challenge_name,
+        })
       });
       return response.json(); // parses JSON response into native JavaScript objects
     }

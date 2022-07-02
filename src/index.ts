@@ -36,11 +36,12 @@ challengeObjectByName.set(stupid_run.name, stupid_run);
 
 
 
-const defaultChallenge = stupid_run;
+const defaultChallenge = stupid_memory;
 export default function createComponent(challenge: challenge) {
     // //add default challenge
     if (challenge == null)
-        challenge = challengeObjectByName.get(getRandomChallengeKey());
+        // challenge = challengeObjectByName.get(getRandomChallengeKey());
+        challenge = stupid_bird
     const template = createTemplate(challenge)
     class ChallengeWidgetElement extends HTMLElement {
         constructor() {

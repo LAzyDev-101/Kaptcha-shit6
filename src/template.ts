@@ -2,7 +2,8 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import styles from "./assets/challangeWidget.css";
 // import { challenge } from './global';
 
-const host = 'https://dev.tanakorn.space/';
+// const host = 'https://dev.tanakorn.space/';
+const host = 'http://localhost:3000/static/';
 
 export function createTemplate(challenge: challenge) {
   const template = document.createElement("template");
