@@ -15,6 +15,8 @@ export default function createComponent(challenge: challenge) {
                 rule: this.shadowRoot?.querySelector(".challenge-name")?.textContent || "",
                 winCondition: this.shadowRoot?.querySelector(".challenge-name")?.textContent || "",
                 src: this.shadowRoot?.querySelector(".challenge-content")?.getAttribute("src") || "",
+                width: this.shadowRoot?.querySelector(".challenge-content")?.getAttribute("width") || "",
+                height: this.shadowRoot?.querySelector(".challenge-content")?.getAttribute("height") || "",
             };
         }
         set challenge(val: challenge) {
@@ -33,6 +35,8 @@ export default function createComponent(challenge: challenge) {
             var challengeContent = this.shadowRoot?.querySelector(".challenge-content");
             if (challengeContent) {
                 challengeContent.setAttribute("src", `https://dev.tanakorn.space/core/static/${val.name}`);
+                challengeContent.setAttribute("width", `${val.width}px`);
+                challengeContent.setAttribute("height", `${val.height}px`);
             }
         }
 
