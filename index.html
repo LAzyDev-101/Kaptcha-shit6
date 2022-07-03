@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-  </head>
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-  <div class="bg-zinc-800 text-center justify-center flex h-screen">
-    <div class="my-auto justify-center flex grid grid-flow-row auto-rows-max">
+</head>
+
+<div class="bg-zinc-800 text-center justify-center flex h-screen">
+  <div class="my-auto justify-center flex grid grid-flow-row auto-rows-max">
 
     <div>
       <div>
@@ -17,7 +18,7 @@
     </div>
 
     <div>
-    <button onclick="finish();" id="btn">&nbsp;</button>
+      <button onclick="finish();" id="btn">&nbsp;</button>
       <div class="captcha mx-auto my-7">
         <div class="spinner">
           <label>
@@ -35,430 +36,434 @@
 
 
       <div>
-        <a href="https://github.com/LAzyDev-101/stupid-captcha-template/" target="_blank" class="text-white">by LAzyDev</a>    
-        <br>   
-      <div class="text-white">© 2022 LAzyDeV. All Rights Reserved.</div>
+        <a href="https://github.com/LAzyDev-101/stupid-captcha-template/" target="_blank" class="text-white">by
+          LAzyDev</a>
+        <br>
+        <div class="text-white">© 2022 LAzyDeV. All Rights Reserved.</div>
       </div>
 
     </div>
-    </div>  
+  </div>
 
-<script>
-  let widget = null;
-  let host = "https://dev.tanakorn.space/core"
-  let challengeList = {
-    "stupid_run": {
-      "name": "Stupid run",
-      "rule": "Spacebar to jump!!",
-      "winCondition": "Try to win (-0...0-)",
-      "src": `/static/stupid_run`,
-      "width": "850",
-      "height": "250",
-    },
-    "stupid_block": {
-      "name": "Stupid block",
-      "rule": "Reach the goal without touching the wall",
-      "winCondition": "No way to run",
-      "src": `/static/stupid_block`,
-      "width": "700",
-      "height": "650",
-    },
-    "stupid_bird": {
-      "name": "Stupid Flappy Bird 0...0",
-      "rule": "Control the with your spacebarbutton",
-      "winCondition": "Reach 7 score",
-      "src": `/static/stupid_bird`,
-      "width": "530",
-      "height": "500",
-    },
-    "stupid_memory": {
-      "name": "Memory",
-      "rule": "Remember all of the titles with your",
-      "winCondition": "GL!!",
-      "src": `/static/stupid_memory`,
-      "width": "430",
-      "height": "370",
-    },
-    "stupid_animal": {
-      "name": "The strongest",
-      "rule": "Select 3 of the strongest",
-      "winCondition": "Only the best 3",
-      "src": `/static/stupid_animal`,
-      "width": "350",
-      "height": "350",
-    },
-
-    "stupid_traffic": {
-      "name": "Traffic Light",
-      "rule": "Select all image with a",
-      "winCondition": "Stop once there are none left",
-      "src": `/static/stupid_traffic`,
-      "width": "720",
-      "height": "720",
-    }
-  }
-
-  let challenge_name = null;
-  const kaptcha_key = 'kaptcha_id';
-
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  function startChallenge() {
-    setTimeout(() => {
-      //set kaptcha_id on session storage
-      window.addEventListener('message', sendResult, false);
-      sessionStorage.setItem('kaptcha_id', generateString(5));
-      document.getElementById("spinner").className = "checkmark";
-      getChallenge()
-    }, 1000);
-
-
-    setTimeout(() => {
-      document.getElementById("spinner").className = "checkmark-spin";
-    }, 1000);
-  }
-
-  function finish() {
-    document.getElementById("spinner").className = "checkmark-finish";
-  }
-
-  const generateString = (length) => {
-    let result = ' ';
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-
-    return result;
-  }
-
-  const getChallenge = (challenge_name) => {
-    let objects;
-    if (!challenge_name) {
-      objects = challengeList[Object.keys(challengeList)[Math.floor(Math.random() * Object.keys(challengeList).length)]];
-
-    }
-    else {
-      objects = challengeList[challenge_name];
-    }
-
-    widget!==null ? widget.challenge = objects : widget = window.ChallengeWidget(objects)
-  }
-  const sendResult = async () => {
-
-    if (event.origin != "https://dev.tanakorn.space") {
-      return;
-    }
-    const result = await postData(sessionStorage.getItem('kaptcha_id'), event.data)
-    if (result['status'] != "FINISH") {
-      nextChallenge = result['next_challenge_name']
-      getChallenge(nextChallenge)
-    } else {
-      //TODO: On finish
-    }
-  }
-
-  // POST method implementation:
-  async function postData(id, challenge_name) {
-    // Default options are marked with *
-    url = `${host}/post_finish`
-    const body = JSON.stringify({
-      "key": id,
-      "challenge_name": challenge_name
-    })
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+  <script>
+    let widget = null;
+    let host = "https://dev.tanakorn.space/core"
+    let challengeList = {
+      "stupid_run": {
+        "name": "Stupid run",
+        "rule": "Spacebar to jump!!",
+        "winCondition": "Try to win (-0...0-)",
+        "src": `/static/stupid_run`,
+        "width": "850",
+        "height": "250",
       },
-      body: body
-    });
-    const res = await response.json()
-    return res; // parses JSON response into native JavaScript objects
-  }
-</script>
+      "stupid_block": {
+        "name": "Stupid block",
+        "rule": "Reach the goal without touching the wall",
+        "winCondition": "No way to run",
+        "src": `/static/stupid_block`,
+        "width": "700",
+        "height": "650",
+      },
+      "stupid_bird": {
+        "name": "Stupid Flappy Bird 0...0",
+        "rule": "Control the with your spacebarbutton",
+        "winCondition": "Reach 7 score",
+        "src": `/static/stupid_bird`,
+        "width": "530",
+        "height": "500",
+      },
+      "stupid_memory": {
+        "name": "Memory",
+        "rule": "Remember all of the titles with your",
+        "winCondition": "GL!!",
+        "src": `/static/stupid_memory`,
+        "width": "430",
+        "height": "370",
+      },
+      "stupid_animal": {
+        "name": "The strongest",
+        "rule": "Select 3 of the strongest",
+        "winCondition": "Only the best 3",
+        "src": `/static/stupid_animal`,
+        "width": "350",
+        "height": "350",
+      },
 
-<style>
-  body {
-    font-family: "Roboto", sans-serif;
-  }
+      "stupid_traffic": {
+        "name": "Traffic Light",
+        "rule": "Select all image with a",
+        "winCondition": "Stop once there are none left",
+        "src": `/static/stupid_traffic`,
+        "width": "720",
+        "height": "720",
+      }
+    }
 
-  .captcha {
-    background-color: #f9f9f9;
-    border: 2px solid #d3d3d3;
-    border-radius: 5px;
-    color: #4c4a4b;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 350px;
-  }
+    let challenge_name = null;
+    const kaptcha_key = 'kaptcha_id';
 
-  @media screen and (max-width: 500px) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    function startChallenge() {
+      setTimeout(() => {
+        //set kaptcha_id on session storage
+        window.addEventListener('message', sendResult, false);
+        sessionStorage.setItem('kaptcha_id', generateString(5));
+        document.getElementById("spinner").className = "checkmark";
+        getChallenge()
+      }, 1000);
+
+
+      setTimeout(() => {
+        document.getElementById("spinner").className = "checkmark-spin";
+      }, 1000);
+    }
+
+    function finish() {
+      document.getElementById("spinner").className = "checkmark-finish";
+      setTimeout(() => {
+        window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+      }, 1000);
+    }
+
+    const generateString = (length) => {
+      let result = ' ';
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+
+      return result;
+    }
+
+    const getChallenge = (challenge_name) => {
+      let objects;
+      if (!challenge_name) {
+        objects = challengeList[Object.keys(challengeList)[Math.floor(Math.random() * Object.keys(challengeList).length)]];
+
+      }
+      else {
+        objects = challengeList[challenge_name];
+      }
+
+      widget !== null ? widget.challenge = objects : widget = window.ChallengeWidget(objects)
+    }
+    const sendResult = async () => {
+
+      if (event.origin != "https://dev.tanakorn.space") {
+        return;
+      }
+      const result = await postData(sessionStorage.getItem('kaptcha_id'), event.data)
+      if (result['status'] != "FINISH") {
+        nextChallenge = result['next_challenge_name']
+        getChallenge(nextChallenge)
+      } else {
+        finish()
+      }
+    }
+
+    // POST method implementation:
+    async function postData(id, challenge_name) {
+      // Default options are marked with *
+      url = `${host}/post_finish`
+      const body = JSON.stringify({
+        "key": id,
+        "challenge_name": challenge_name
+      })
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: body
+      });
+      const res = await response.json()
+      return res; // parses JSON response into native JavaScript objects
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: "Roboto", sans-serif;
+    }
+
     .captcha {
-      flex-direction: column;
+      background-color: #f9f9f9;
+      border: 2px solid #d3d3d3;
+      border-radius: 5px;
+      color: #4c4a4b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 350px;
+    }
+
+    @media screen and (max-width: 500px) {
+      .captcha {
+        flex-direction: column;
+      }
+
+      .text {
+        margin: 0.5em !important;
+        text-align: center;
+      }
+
+      .logo {
+        align-self: center !important;
+      }
+
+      .spinner {
+        margin: 2em 0.5em 0.5em 0.5em !important;
+      }
     }
 
     .text {
-      margin: 0.5em !important;
-      text-align: center;
-    }
-
-    .logo {
-      align-self: center !important;
+      font-size: 1.2em;
+      font-weight: 500;
+      margin-right: 1em;
     }
 
     .spinner {
-      margin: 2em 0.5em 0.5em 0.5em !important;
+      position: relative;
+      width: 2em;
+      height: 2em;
+      display: flex;
+      margin: 2em 1em;
+      align-items: center;
+      justify-content: center;
     }
-  }
 
-  .text {
-    font-size: 1.2em;
-    font-weight: 500;
-    margin-right: 1em;
-  }
+    input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      z-index: -1;
+    }
 
-  .spinner {
-    position: relative;
-    width: 2em;
-    height: 2em;
-    display: flex;
-    margin: 2em 1em;
-    align-items: center;
-    justify-content: center;
-  }
-
-  input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    z-index: -1;
-  }
-
-  input[type="checkbox"]+.checkmark,
-  input[type="checkbox"]+.checkmark-spin {
-    display: inline-block;
-    width: 2em;
-    height: 2em;
-    background-color: #fcfcfc;
-    border: 2.5px solid #c3c3c3;
-    border-radius: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
+    input[type="checkbox"]+.checkmark,
+    input[type="checkbox"]+.checkmark-spin {
+      display: inline-block;
+      width: 2em;
+      height: 2em;
+      background-color: #fcfcfc;
+      border: 2.5px solid #c3c3c3;
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
 
 
-  input[type="checkbox"]+.checkmark-finish {
-    display: inline-block;
-    width: 2em;
-    height: 2em;
-    border-radius: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
+    input[type="checkbox"]+.checkmark-finish {
+      display: inline-block;
+      width: 2em;
+      height: 2em;
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
 
-  input[type="checkbox"]+.checkmark span,
-  input[type="checkbox"]+.checkmark-spin span,
-  input[type="checkbox"]+.checkmark-finish span {
-    content: "";
-    position: relative;
-    margin-top: -3px;
-    transform: rotate(45deg);
-    width: 0.75em;
-    height: 1.2em;
-    opacity: 0;
-  }
-
-  input[type="checkbox"]+.checkmark-finish>span:after {
-    content: "";
-    position: absolute;
-    display: block;
-    height: 3px;
-    bottom: 0;
-    left: 0;
-    background-color: #029f56;
-  }
-
-  input[type="checkbox"]+.checkmark-finish>span:before {
-    content: "";
-    position: absolute;
-    display: block;
-    width: 3px;
-    bottom: 0;
-    right: 0;
-    background-color: #029f56;
-  }
-
-  input[type="checkbox"]:checked+.checkmark {
-    animation: 2s spin forwards;
-  }
-
-  input[type="checkbox"]:checked+.checkmark-spin {
-    animation: 2s spininf infinite;
-  }
-
-  input[type="checkbox"]:checked+.checkmark-finish>span {
-    animation: 1s fadein 1.9s forwards;
-  }
-
-  input[type="checkbox"]:checked+.checkmark-finish>span:after {
-    animation: 0.3s bottomslide 2s forwards;
-  }
-
-  input[type="checkbox"]:checked+.checkmark-finish>span:before {
-    animation: 0.5s rightslide 2.2s forwards;
-  }
-
-  @keyframes fadein {
-    0% {
-      transform: rotate(0deg);
+    input[type="checkbox"]+.checkmark span,
+    input[type="checkbox"]+.checkmark-spin span,
+    input[type="checkbox"]+.checkmark-finish span {
+      content: "";
+      position: relative;
+      margin-top: -3px;
+      transform: rotate(45deg);
+      width: 0.75em;
+      height: 1.2em;
       opacity: 0;
     }
 
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes bottomslide {
-    0% {
-      width: 0;
-    }
-
-    100% {
-      width: 100%;
-    }
-  }
-
-  @keyframes rightslide {
-    0% {
-      height: 0;
+    input[type="checkbox"]+.checkmark-finish>span:after {
+      content: "";
+      position: absolute;
+      display: block;
+      height: 3px;
+      bottom: 0;
+      left: 0;
+      background-color: #029f56;
     }
 
-    100% {
+    input[type="checkbox"]+.checkmark-finish>span:before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 3px;
+      bottom: 0;
+      right: 0;
+      background-color: #029f56;
+    }
+
+    input[type="checkbox"]:checked+.checkmark {
+      animation: 2s spin forwards;
+    }
+
+    input[type="checkbox"]:checked+.checkmark-spin {
+      animation: 2s spininf infinite;
+    }
+
+    input[type="checkbox"]:checked+.checkmark-finish>span {
+      animation: 1s fadein 1.9s forwards;
+    }
+
+    input[type="checkbox"]:checked+.checkmark-finish>span:after {
+      animation: 0.3s bottomslide 2s forwards;
+    }
+
+    input[type="checkbox"]:checked+.checkmark-finish>span:before {
+      animation: 0.5s rightslide 2.2s forwards;
+    }
+
+    @keyframes fadein {
+      0% {
+        transform: rotate(0deg);
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes bottomslide {
+      0% {
+        width: 0;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+
+    @keyframes rightslide {
+      0% {
+        height: 0;
+      }
+
+      100% {
+        height: 100%;
+      }
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       height: 100%;
-    }
-  }
-
-  .logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    align-self: flex-end;
-    margin: 0.5em 1em;
-  }
-
-  .logo img {
-    height: 2em;
-    width: 2em;
-  }
-
-  .logo p {
-    color: #9d9ba7;
-    margin: 0;
-    font-size: 1em;
-    font-weight: 700;
-    margin: 0.4em 0 0.2em 0;
-  }
-
-  .logo small {
-    color: #9d9ba7;
-    margin: 0;
-    font-size: 0.8em;
-  }
-
-  @keyframes spin {
-    10% {
-      width: 0;
-      height: 0;
-      border-width: 6px;
+      align-self: flex-end;
+      margin: 0.5em 1em;
     }
 
-    30% {
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      border-width: 1em;
-      transform: rotate(0deg);
-      border-color: rgb(199, 218, 245);
-    }
-
-    50% {
-      width: 2em;
+    .logo img {
       height: 2em;
-      border-radius: 50%;
-      border-width: 4px;
-      border-color: rgb(199, 218, 245);
-      border-right-color: rgb(89, 152, 239);
-    }
-
-    70% {
-      border-width: 4px;
-      border-color: rgb(199, 218, 245);
-      border-right-color: rgb(89, 152, 239);
-    }
-
-    90% {
-      border-width: 4px;
-    }
-
-    100% {
       width: 2em;
-      height: 2em;
-      border-radius: 50%;
-      transform: rotate(720deg);
-      border-color: transparent;
-    }
-  }
-
-  @keyframes spininf {
-    0% {
-      width: 2em;
-      height: 2em;
-      border-radius: 50%;
-      border-width: 4px;
-      border-color: rgb(199, 218, 245);
-      border-right-color: rgb(89, 152, 239);
     }
 
-    70% {
-      border-width: 4px;
-      border-color: rgb(199, 218, 245);
-      border-right-color: rgb(89, 152, 239);
+    .logo p {
+      color: #9d9ba7;
+      margin: 0;
+      font-size: 1em;
+      font-weight: 700;
+      margin: 0.4em 0 0.2em 0;
     }
 
-    90% {
-      border-width: 4px;
-      border-color: rgb(199, 218, 245);
-      border-right-color: rgb(89, 152, 239);
+    .logo small {
+      color: #9d9ba7;
+      margin: 0;
+      font-size: 0.8em;
     }
 
-    100% {
-      border-width: 4px;
-      border-color: rgb(199, 218, 245);
-      border-right-color: rgb(89, 152, 239);
-      width: 2em;
-      height: 2em;
-      border-radius: 50%;
-      transform: rotate(720deg);
+    @keyframes spin {
+      10% {
+        width: 0;
+        height: 0;
+        border-width: 6px;
+      }
+
+      30% {
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        border-width: 1em;
+        transform: rotate(0deg);
+        border-color: rgb(199, 218, 245);
+      }
+
+      50% {
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
+      }
+
+      70% {
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
+      }
+
+      90% {
+        border-width: 4px;
+      }
+
+      100% {
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        transform: rotate(720deg);
+        border-color: transparent;
+      }
     }
-  }
 
-  ::selection {
-    background-color: transparent;
-    color: teal;
-  }
+    @keyframes spininf {
+      0% {
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
+      }
 
-  ::-moz-selection {
-    background-color: transparent;
-    color: teal;
-  }
-</style>
-</body>
+      70% {
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
+      }
+
+      90% {
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
+      }
+
+      100% {
+        border-width: 4px;
+        border-color: rgb(199, 218, 245);
+        border-right-color: rgb(89, 152, 239);
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        transform: rotate(720deg);
+      }
+    }
+
+    ::selection {
+      background-color: transparent;
+      color: teal;
+    }
+
+    ::-moz-selection {
+      background-color: transparent;
+      color: teal;
+    }
+  </style>
+  </body>
 
 </html>
