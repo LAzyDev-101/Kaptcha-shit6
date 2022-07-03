@@ -34,7 +34,7 @@ export default function createComponent(challenge: challenge) {
             }
             var challengeContent = this.shadowRoot?.querySelector(".challenge-content");
             if (challengeContent) {
-                challengeContent.setAttribute("src", `https://dev.tanakorn.space/core/static/${val.name}`);
+                challengeContent.setAttribute("src", `https://dev.tanakorn.space/core/static/${val.src}`);
                 challengeContent.setAttribute("width", `${val.width}px`);
                 challengeContent.setAttribute("height", `${val.height}px`);
             }
