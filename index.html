@@ -140,8 +140,8 @@
     else {
       objects = challengeList[challenge_name];
     }
-    widget = widget!==null ? widget.challenge = objects : window.ChallengeWidget(objects)
 
+    widget!==null ? widget.challenge = objects : widget = window.ChallengeWidget(objects)
   }
   const sendResult = async () => {
 
