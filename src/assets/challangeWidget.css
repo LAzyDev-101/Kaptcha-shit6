@@ -60,15 +60,6 @@ small {
   height: 24px;
   width: 24px;
 }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 96px);
-  grid-template-rows: repeat(4, 96px);
-  /* background-color: tomato;
-  background-image: url(https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.nkytribune.com%2Fwp-content%2Fuploads%2F2017%2F04%2FWheres-Waldo.png&f=1&nofb=1); */
-  background-position: contain;
-  background-size: 384px;
-}
 .icons span {
   margin-left: 0.3em;
   font-size: 2em;
@@ -126,6 +117,7 @@ header {
   right: 2rem;
   border-radius: 10px;
   box-shadow: 4px 5px 15px 3px rgba(0, 0, 0, 0.16);
+  background-color: white;
 }
 
 .widget-content-wrapper {
