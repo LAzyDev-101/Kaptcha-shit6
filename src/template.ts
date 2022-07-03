@@ -17,7 +17,7 @@ export function createTemplate(challenge: challenge) {
       <small class="challenge-win-condition">${challenge.winCondition}</small>
     </header>
     <div class="widget-content-wrapper">
-    <iframe class="challenge-content" height="${challenge.height}px" width="${challenge.width}px" src="${challenge.src}" title="description"></iframe>
+    <iframe class="challenge-content" height="${challenge.height}px" width="${challenge.width}px" src="${`https://dev.tanakorn.space/core/${challenge.src}`}" title="description"></iframe>
     </div>
     </div>
     <div class="footer">
