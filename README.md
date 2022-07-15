@@ -3,7 +3,7 @@
 
 
 ## What is Stupid hackathon.
-**Dev. Mountain Tech Festival** is The smartest hackathon in the world.
+**Stupid hackathon** is The smartest hackathon in the world.
 
 
 ## What is Kaptcha
