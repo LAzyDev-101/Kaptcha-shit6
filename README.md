@@ -1,4 +1,5 @@
 #  The Stupid Hackathon Thailand 2022 #SHIT6
+
 ## About this event 
 ![image](https://user-images.githubusercontent.com/30498964/210324880-8c204a1d-86c8-4a67-b204-575a6c220d17.png)
 ![image](https://user-images.githubusercontent.com/30498964/210324937-5a205003-2a4d-4a12-b1ef-f26ba7e91acb.png)
@@ -10,6 +11,8 @@
 ## About this project 
 
 > This one of the six challenging game for ours captcha
+
+** Stupid animal
 
 ![image](https://user-images.githubusercontent.com/30498964/210324953-57707ca3-f4d4-4597-8e48-0bf5b6a4743b.png)
 
