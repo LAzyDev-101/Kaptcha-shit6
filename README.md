@@ -16,21 +16,62 @@ This is repo for ours captcha client that will communtication between user and s
 
 ![image](https://user-images.githubusercontent.com/30498964/210324953-57707ca3-f4d4-4597-8e48-0bf5b6a4743b.png)
 
-### Game details
-In this game you just need to select the correct answer (づ ◕‿◕ )づ 
-**[Preview](https://youtu.be/-8mBm18a_Mo)**
+### **Game Details**
 
-![image](https://user-images.githubusercontent.com/30498964/210326252-82c271da-bf41-49d7-9100-74a3505525d0.png)
+* Stupid Run
 
-![image](https://user-images.githubusercontent.com/30498964/210326279-6c6e86ba-cc05-4257-8462-cc16727deb9f.png)
+```json
+        "rule": "Spacebar to jump!!",
+        "winCondition": "Reach the end of the stage."
+```
 
-![image](https://user-images.githubusercontent.com/30498964/210325044-e56439f8-b809-4192-a506-5e57ce823192.png)
- 
-![image](https://user-images.githubusercontent.com/30498964/210326296-366c0aaf-cd0c-4627-916f-2d44ae3cc5f5.png)
+![image](https://user-images.githubusercontent.com/30498964/210326343-b59bd0e2-f860-49ca-b829-f64356259165.png)
+
+
+* Stupid Block
+
+```json
+        "rule": "Reach the goal",
+        "winCondition": "Without touching the wall."
+```
+
 
 ![image](https://user-images.githubusercontent.com/30498964/210326317-721c06cb-264f-435a-9202-e5be5b8bc61b.png)
 
-![image](https://user-images.githubusercontent.com/30498964/210326343-b59bd0e2-f860-49ca-b829-f64356259165.png)
+
+* Stupid Bird
+
+```json
+        "rule": "Spacebar to jump!!",
+        "winCondition": "Reach 7 score"
+```
+![image](https://user-images.githubusercontent.com/30498964/210326279-6c6e86ba-cc05-4257-8462-cc16727deb9f.png)
+
+* Stupid Memory
+
+```json
+        "rule": "Remember all of the tiles",
+        "winCondition": "Click correct answer"
+```
+![image](https://user-images.githubusercontent.com/30498964/210326252-82c271da-bf41-49d7-9100-74a3505525d0.png)
+
+* Stupid Animal
+
+```json
+        "rule": "Select 3 of the strongest",
+        "winCondition": "Only the best 3."
+```
+![image](https://user-images.githubusercontent.com/30498964/210325044-e56439f8-b809-4192-a506-5e57ce823192.png)
+
+* Stupid Traffic
+
+```json
+        "rule": "Select all image with that contain traffic lights",
+        "winCondition": "Stop once there are none left."
+```
+![image](https://user-images.githubusercontent.com/30498964/210326296-366c0aaf-cd0c-4627-916f-2d44ae3cc5f5.png)
+
+**[Preview](https://youtu.be/-8mBm18a_Mo)**
 
 
 <hr>
